@@ -30,7 +30,7 @@ function calculateRisk(cape, cin, li) {
 
 districtSelect.addEventListener("change", () => {
   const [lat, lon] = districtSelect.value.split(",");
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=cape,convective_inhibition,lifted_index,cloud_base_height,dew_point_2m,wind_speed_1000hPa,wind_speed_500hPa&timezone=auto`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=22.82,23.999941,23.643999,23.64448,23.622641,25.74486,25.778522,26.335377,22.723406,22.3419,24.923025,23.911522,23.015913,24.743448,24.213799,25.019405,24.006355,22.337299,23.2321,22.527651,25.810347,24.771305,25.636574,23.637569,23.920717,23.987967,23.989014,23.858334,23.450001,23.772125,23.810331,24.433123,23.170664,24.894802,24.886436,23.777176,23.811056&longitude=89.550003,90.420273,88.855637,90.598434,90.499794,89.275589,88.897377,88.551697,89.075127,91.815536,89.950111,90.388962,91.397583,90.398384,90.952202,90.013733,89.249298,89.10865,90.663078,91.920555,89.648697,91.545555,88.636322,90.483269,90.718811,90.648849,90.418167,90.26667,91.199997,88.631371,90.412521,90.786568,89.212418,91.869034,91.880722,90.399452,90.407608&hourly=cape,convective_inhibition,lifted_index,cloud_base_height,dew_point_2m,wind_speed_1000hPa,wind_speed_500hPa&timezone=auto`;
 
   fetch(url)
     .then(res => res.json())
