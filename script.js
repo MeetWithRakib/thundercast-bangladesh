@@ -1,49 +1,63 @@
-// districts.json ফাইল থেকে ডেটা লোড করা
+// DOM elements
+const locationSelect = document.getElementById('district');
+const resultSection = document.getElementById('result');
+const capeElement = document.getElementById('cape');
+const lclElement = document.getElementById('lcl');
+const thunderRiskElement = document.getElementById('risk-level');
+
+// Fetch location data (districts)
 fetch('districts.json')
   .then(res => res.json())
   .then(data => {
-    const select = document.getElementById('district');
     data.forEach(d => {
       const option = document.createElement('option');
       option.value = JSON.stringify({ lat: d.lat, lon: d.lon });
       option.textContent = d.name;
-      select.appendChild(option);
+      locationSelect.appendChild(option);
     });
   })
   .catch(err => console.error('Error loading districts:', err));
 
-// API থেকে ডেটা ফেচ এবং ঝড়ের পূর্বাভাস ক্যালকুলেশন
-document.getElementById('district').addEventListener('change', function () {
-  const selectedDistrict = JSON.parse(this.value);
-  if (!selectedDistrict) return;
+// Event listener for location selection
+locationSelect.addEventListener('change', (e) => {
+  const { lat, lon } = JSON.parse(e.target.value);
+  fetchWeatherData(lat, lon);
+});
 
-  const { lat, lon } = selectedDistrict;
-  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=cape,cloud_base_height&timezone=auto`;
+// Function to fetch weather data
+function fetchWeatherData(lat, lon) {
+  const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=cape,lifted_index,convective_inhibition,wind_speed_10m,wind_gusts_10m,wind_direction_10m,temperature_2m,relative_humidity_2m&current_weather=true&timezone=auto`;
 
+  // Fetch data from API
   fetch(apiUrl)
     .then(res => res.json())
     .then(data => {
       const cape = data.hourly.cape[0];
-      const lcl = data.hourly.cloud_base_height[0];
+      const lcl = data.hourly.lifted_index[0];
+      const windSpeed = data.hourly.wind_speed_10m[0];
+      const windGusts = data.hourly.wind_gusts_10m[0];
+      const windDirection = data.hourly.wind_direction_10m[0];
 
-      document.getElementById('cape').textContent = cape;
-      document.getElementById('lcl').textContent = lcl;
-      document.getElementById('risk-level').textContent = calculateThunderRisk(cape, lcl);
-      document.getElementById('result').classList.remove('hidden');
+      // Display data in the HTML
+      capeElement.textContent = `CAPE: ${cape} J/kg`;
+      lclElement.textContent = `Lifted Index: ${lcl}`;
+      thunderRiskElement.textContent = `Thunderstorm Risk: ${calculateThunderRisk(cape, lcl)}`;
+      
+      resultSection.classList.remove('hidden');
     })
     .catch(err => {
-      console.error('Error fetching data:', err);
+      console.error('Error fetching weather data:', err);
       alert('ডেটা আনতে সমস্যা হয়েছে।');
     });
-});
+}
 
-// ঝড়ের ঝুঁকি নির্ধারণের ফাংশন
+// Function to calculate thunderstorm risk based on CAPE and Lifted Index (LI)
 function calculateThunderRisk(cape, lcl) {
-  if (cape > 1500 && lcl < 2000) {
-    return 'উচ্চ ঝুঁকি';
-  } else if (cape > 800 && lcl < 2500) {
-    return 'মাঝারি ঝুঁকি';
+  if (cape >= 1000 && lcl <= -5) {
+    return 'High Risk';
+  } else if (cape >= 500 && lcl <= 0) {
+    return 'Moderate Risk';
   } else {
-    return 'নিম্ন ঝুঁকি';
+    return 'Low Risk';
   }
 }
