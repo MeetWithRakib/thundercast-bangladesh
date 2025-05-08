@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ThunderCast Bangladesh</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+<body class="bg-blue-50 min-h-screen flex flex-col items-center p-4">
+  <h1 class="text-3xl font-bold mb-4 text-center">ThunderCast Bangladesh</h1>
+
+  <div class="mb-4 w-full max-w-md">
+    <label for="district" class="block text-lg font-medium mb-2">জেলা নির্বাচন করুন:</label>
+    <select id="district" class="w-full p-2 rounded border">
+      <option value="">জেলা নির্বাচন করুন</option>
+    </select>
+  </div>
+
+  <div id="result" class="bg-white shadow-md rounded p-4 w-full max-w-md hidden">
+    <h2 class="text-xl font-semibold mb-2">পূর্বাভাস ফলাফল</h2>
+    <p><strong>CAPE:</strong> <span id="cape">লোড হচ্ছে...</span> J/kg</p>
+    <p><strong>LCL:</strong> <span id="lcl">লোড হচ্ছে...</span> m</p>
+    <p><strong>ঝড়ের ঝুঁকি:</strong> <span id="risk-level" class="font-bold"></span></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
