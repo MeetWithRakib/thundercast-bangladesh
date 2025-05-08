@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ThunderCast Bangladesh</title>
+  <title>বজ্রঝড় পূর্বাভাস</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <h1>ThunderCast Bangladesh</h1>
-
   <div class="container">
+    <h1>স্বয়ংক্রিয় বজ্রঝড় পূর্বাভাস</h1>
     <label for="district">জেলা নির্বাচন করুন:</label>
     <select id="district">
-      <option value="">জেলা নির্বাচন করুন</option>
+      <option disabled selected>-- একটি জেলা নির্বাচন করুন --</option>
     </select>
-  </div>
 
-  <div id="result" class="hidden">
-    <h2>পূর্বাভাস ফলাফল</h2>
-    <p><strong>CAPE:</strong> <span id="cape">লোড হচ্ছে...</span> J/kg</p>
-    <p><strong>LCL:</strong> <span id="lcl">লোড হচ্ছে...</span> m</p>
-    <p><strong>ঝড়ের ঝুঁকি:</strong> <span id="risk-level"></span></p>
+    <div id="result" class="hidden">
+      <h2>পূর্বাভাস ফলাফল</h2>
+      <p><strong>CAPE:</strong> <span id="cape"></span> J/kg</p>
+      <p><strong>CIN:</strong> <span id="cin"></span> J/kg</p>
+      <p><strong>LI:</strong> <span id="li"></span> °C</p>
+      <p><strong>LCL:</strong> <span id="lcl"></span> m</p>
+      <p><strong>Wind Shear:</strong> <span id="wind_shear"></span> m/s</p>
+      <p><strong>Dew Point:</strong> <span id="dew_point"></span> °C</p>
+      <p><strong>ঝড়ের সম্ভাবনা:</strong> <span id="risk"></span></p>
+    </div>
   </div>
 
   <script src="script.js"></script>
 </body>
-
 </html>
